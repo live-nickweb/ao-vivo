@@ -19,7 +19,7 @@ body {
   padding: 14px;
   font-size: 22px;
   font-weight: bold;
-  border-bottom: 2px solid #fff; /* mantém só essa linha */
+  border-bottom: 2px solid #fff;
 }
 
 /* PLAYER */
@@ -33,7 +33,6 @@ body {
   width: 90%;
   max-width: 900px;
   aspect-ratio: 16 / 9;
-  background: black;
 }
 
 .player iframe {
@@ -42,24 +41,34 @@ body {
   border: none;
 }
 
+/* TEXTO ACIMA DA LOGO */
+.nickweb-right {
+  max-width: 900px;
+  margin: 10px auto 0;
+  padding: 0 15px;
+  text-align: right;
+  font-size: 20px;
+  font-weight: bold;
+}
+
 /* LOGO COM CÍRCULO */
 .logo-circle {
   display: flex;
   justify-content: center;
-  margin: 18px 0;
+  margin: 10px 0 18px;
 }
 
 .logo-circle img {
-  width: 140px;
-  height: 140px;
+  width: 100px;   /* logo menor */
+  height: 100px;
   object-fit: contain;
   border-radius: 50%;
-  border: 3px solid #fff;   /* círculo branco */
-  padding: 12px;
+  border: 3px solid #fff;
+  padding: 10px;
   background: #000;
 }
 
-/* TEXTO DE DIREITOS (GRANDE, NÃO CENTRALIZADO) */
+/* TEXTO */
 .info {
   max-width: 900px;
   margin: 10px auto 40px;
@@ -67,10 +76,14 @@ body {
   text-align: left;
 }
 
-.info p {
+.info .direitos {
+  margin: 0 0 10px;
+  font-size: 20px;
+}
+
+.info .descricao {
   margin: 0;
-  font-size: 20px;   /* grande igual ao print */
-  opacity: 0.95;
+  font-size: 20px;
 }
 
 /* BOTÃO CHAT */
@@ -92,7 +105,7 @@ body {
   background: #7d1fd1;
 }
 
-/* CHAT FLUTUANTE */
+/* CHAT */
 .chat-overlay {
   position: fixed;
   bottom: 80px;
@@ -104,7 +117,6 @@ body {
   border-radius: 10px;
   display: none;
   z-index: 1000;
-  overflow: hidden;
 }
 
 .chat-overlay iframe {
@@ -117,10 +129,8 @@ body {
 
 <body>
 
-<!-- TOPO -->
 <div class="topbar">NickWeb</div>
 
-<!-- PLAYER -->
 <div class="player-wrapper">
   <div class="player">
     <iframe
@@ -131,16 +141,23 @@ body {
   </div>
 </div>
 
-<!-- LOGO COM CÍRCULO -->
+<!-- TEXTO NO CANTO DIREITO -->
+<div class="nickweb-right">NickWeb</div>
+
+<!-- LOGO -->
 <div class="logo-circle">
-  <img
-    src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/Nickelodeon_2023_logo_%28outline%29.svg/250px-Nickelodeon_2023_logo_%28outline%29.svg.png"
-    alt="Nickelodeon">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/Nickelodeon_2023_logo_%28outline%29.svg/250px-Nickelodeon_2023_logo_%28outline%29.svg.png">
 </div>
 
-<!-- TEXTO DE DIREITOS -->
+<!-- TEXTOS -->
 <div class="info">
-  <p>Todos os direitos reservados à Paramount Skydance</p>
+  <p class="direitos">
+    Todos os direitos reservados à Paramount Skydance
+  </p>
+
+  <p class="descricao">
+    Nós somos a NickWeb, um revival da Nickelodeon Brasil, por enquanto transmitimos na Twitch
+  </p>
 </div>
 
 <!-- CHAT -->
