@@ -19,8 +19,7 @@ body {
   padding: 14px;
   font-size: 22px;
   font-weight: bold;
-  text-align: left;
-  border-bottom: 2px solid #fff; /* linha branca */
+  border-bottom: 2px solid #fff; /* mantém só essa linha */
 }
 
 /* PLAYER */
@@ -43,33 +42,34 @@ body {
   border: none;
 }
 
-/* LINHA SEPARADORA */
-.divider {
-  width: 90%;
-  max-width: 900px;
-  height: 2px;
-  background: #fff;
-  margin: 15px auto;
+/* LOGO COM CÍRCULO */
+.logo-circle {
+  display: flex;
+  justify-content: center;
+  margin: 18px 0;
 }
 
-/* LOGO */
-.logo-under {
-  display: block;
-  margin: 10px auto;
-  width: 160px;
+.logo-circle img {
+  width: 140px;
+  height: 140px;
+  object-fit: contain;
+  border-radius: 50%;
+  border: 3px solid #fff;   /* círculo branco */
+  padding: 12px;
+  background: #000;
 }
 
-/* INFO */
+/* TEXTO DE DIREITOS (GRANDE, NÃO CENTRALIZADO) */
 .info {
   max-width: 900px;
-  margin: 10px auto;
+  margin: 10px auto 40px;
   padding: 0 15px;
-  text-align: center;
+  text-align: left;
 }
 
 .info p {
-  margin-top: 6px;
-  font-size: 18px;
+  margin: 0;
+  font-size: 20px;   /* grande igual ao print */
   opacity: 0.95;
 }
 
@@ -117,7 +117,7 @@ body {
 
 <body>
 
-<!-- TOPO COM NOME -->
+<!-- TOPO -->
 <div class="topbar">NickWeb</div>
 
 <!-- PLAYER -->
@@ -131,15 +131,12 @@ body {
   </div>
 </div>
 
-<div class="divider"></div>
-
-<!-- LOGO -->
-<img
-  src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/Nickelodeon_2023_logo_%28outline%29.svg/250px-Nickelodeon_2023_logo_%28outline%29.svg.png"
-  class="logo-under"
-  alt="Nickelodeon">
-
-<div class="divider"></div>
+<!-- LOGO COM CÍRCULO -->
+<div class="logo-circle">
+  <img
+    src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/Nickelodeon_2023_logo_%28outline%29.svg/250px-Nickelodeon_2023_logo_%28outline%29.svg.png"
+    alt="Nickelodeon">
+</div>
 
 <!-- TEXTO DE DIREITOS -->
 <div class="info">
