@@ -5,32 +5,33 @@
 <title>NickWeb</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<!-- Fonte igual ao print -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
 <style>
 body {
   margin: 0;
-  font-family: Arial, Helvetica, sans-serif;
   background: #000;
   color: #fff;
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
 /* TOPO */
 .topbar {
-  background: #000;
-  padding: 14px;
+  padding: 14px 16px;
   font-size: 22px;
-  font-weight: bold;
-  border-bottom: 2px solid #fff;
+  font-weight: 600;
 }
 
 /* PLAYER */
 .player-wrapper {
   display: flex;
   justify-content: center;
-  margin: 15px 0;
+  margin: 14px 0 6px;
 }
 
 .player {
-  width: 90%;
+  width: 92%;
   max-width: 900px;
   aspect-ratio: 16 / 9;
 }
@@ -41,82 +42,69 @@ body {
   border: none;
 }
 
-/* TEXTO ACIMA DA LOGO */
-.nickweb-right {
-  max-width: 900px;
-  margin: 10px auto 0;
-  padding: 0 15px;
-  text-align: right;
-  font-size: 20px;
-  font-weight: bold;
-}
-
-/* LOGO COM CÍRCULO */
+/* LOGO */
 .logo-circle {
   display: flex;
   justify-content: center;
-  margin: 10px 0 18px;
+  margin: 18px 0 10px;
 }
 
 .logo-circle img {
-  width: 100px;   /* logo menor */
-  height: 100px;
-  object-fit: contain;
+  width: 110px;
+  height: 110px;
   border-radius: 50%;
   border: 3px solid #fff;
   padding: 10px;
   background: #000;
 }
 
-/* TEXTO */
-.info {
+/* CONTEÚDO */
+.content {
   max-width: 900px;
-  margin: 10px auto 40px;
-  padding: 0 15px;
-  text-align: left;
+  margin: 0 auto;
+  padding: 0 16px 40px;
 }
 
-.info .direitos {
-  margin: 0 0 10px;
-  font-size: 20px;
+/* TÍTULO GRANDE */
+.content h1 {
+  font-size: 28px;
+  font-weight: 700;
+  margin: 18px 0 10px;
 }
 
-.info .descricao {
-  margin: 0;
-  font-size: 20px;
+/* TEXTO NORMAL */
+.content p {
+  font-size: 18px;
+  line-height: 1.5;
+  margin: 0 0 22px;
+  opacity: 0.95;
 }
 
 /* BOTÃO CHAT */
 .chat-btn {
   position: fixed;
-  bottom: 20px;
-  right: 20px;
-  background: #6a0dad;
+  right: 18px;
+  bottom: 18px;
+  background: #111;
   color: #fff;
-  border: none;
-  padding: 14px 18px;
-  font-size: 16px;
-  border-radius: 50px;
+  border: 1px solid #333;
+  padding: 12px 16px;
+  font-size: 15px;
+  border-radius: 8px;
   cursor: pointer;
-  z-index: 1000;
-}
-
-.chat-btn:hover {
-  background: #7d1fd1;
 }
 
 /* CHAT */
 .chat-overlay {
   position: fixed;
-  bottom: 80px;
-  right: 20px;
+  right: 18px;
+  bottom: 70px;
   width: 320px;
   height: 420px;
   background: #000;
-  border: 2px solid #fff;
+  border: 1px solid #333;
   border-radius: 10px;
   display: none;
-  z-index: 1000;
 }
 
 .chat-overlay iframe {
@@ -129,8 +117,10 @@ body {
 
 <body>
 
-<div class="topbar">NickWeb</div>
+<!-- TOPO -->
+<div class="topbar">Nick Online</div>
 
+<!-- PLAYER -->
 <div class="player-wrapper">
   <div class="player">
     <iframe
@@ -141,21 +131,20 @@ body {
   </div>
 </div>
 
-<!-- TEXTO NO CANTO DIREITO -->
-<div class="nickweb-right">NickWeb</div>
-
 <!-- LOGO -->
 <div class="logo-circle">
   <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/Nickelodeon_2023_logo_%28outline%29.svg/250px-Nickelodeon_2023_logo_%28outline%29.svg.png">
 </div>
 
-<!-- TEXTOS -->
-<div class="info">
-  <p class="direitos">
+<!-- TEXTO -->
+<div class="content">
+  <h1>Nick Online</h1>
+
+  <p>
     Todos os direitos reservados à Paramount Skydance
   </p>
 
-  <p class="descricao">
+  <p>
     Nós somos a NickWeb, um revival da Nickelodeon Brasil, por enquanto transmitimos na Twitch
   </p>
 </div>
@@ -171,9 +160,7 @@ body {
 function toggleChat() {
   const chat = document.getElementById("chat");
   chat.style.display =
-    (chat.style.display === "none" || chat.style.display === "")
-      ? "block"
-      : "none";
+    chat.style.display === "block" ? "none" : "block";
 }
 </script>
 
