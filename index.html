@@ -1,49 +1,78 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<title>NickWeb</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <title>NickWeb</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<style>
-body {
-  margin: 0;
-  background: #000;
-  color: #fff;
-  font-family: Arial, sans-serif;
-}
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #1a0026;
+      color: #ffffff;
+    }
 
-header {
-  background: #111;
-  padding: 10px;
-  text-align: center;
-  font-size: 22px;
-}
+    header {
+      background: #3a005f;
+      padding: 15px;
+      text-align: center;
+      font-size: 26px;
+      font-weight: bold;
+    }
 
-.container {
-  display: flex;
-  height: calc(100vh - 50px);
-}
+    .container {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      padding: 15px;
+    }
 
-.player {
-  flex: 3;
-  border: none;
-}
+    .player {
+      position: relative;
+      width: 100%;
+      padding-top: 56.25%; /* 16:9 */
+      background: black;
+    }
 
-.chat {
-  flex: 1;
-}
+    .player iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
 
-/* Celular */
-@media (max-width: 768px) {
-  .container {
-    flex-direction: column;
-  }
-  .chat {
-    height: 300px;
-  }
-}
-</style>
+    .chat {
+      width: 100%;
+      height: 500px;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .descricao {
+      text-align: center;
+      font-size: 14px;
+      opacity: 0.85;
+      margin-top: 10px;
+    }
+
+    @media (min-width: 900px) {
+      .container {
+        flex-direction: row;
+      }
+
+      .player {
+        flex: 2;
+      }
+
+      .chat {
+        flex: 1;
+        height: 600px;
+      }
+    }
+  </style>
 </head>
 
 <body>
@@ -53,26 +82,43 @@ header {
 <div class="container">
 
   <!-- PLAYER TWITCH -->
-  <iframe
-    class="player"
-    src="https://player.twitch.tv/?channel=nickelodeonbrasil309873&parent=live-nickweb.github.io"
-    frameborder="0"
-    allowfullscreen="true"
-    scrolling="no">
-  </iframe>
+  <div class="player">
+    <iframe
+      src="https://player.twitch.tv/?channel=nickelodeonbrasil309873&parent=live-nickweb.github.io&autoplay=true&muted=false"
+      allowfullscreen
+      allow="autoplay; fullscreen">
+    </iframe>
+  </div>
 
   <!-- CHATANGO -->
   <div class="chat">
-    <script
-      id="cid0020000430246339067"
+    <script id="cid0020000430246339067"
       data-cfasync="false"
       async
       src="//st.chatango.com/js/gz/emb.js"
       style="width:100%;height:100%;">
-{"handle":"nick-web","arch":"js","styles":{"b":100,"c":"000000","d":"000000","l":"FFFFFF","m":"FFFFFF","p":"10","r":100,"surl":0,"fwtickm":1}}
+      {
+        "handle":"nick-web",
+        "arch":"js",
+        "styles":{
+          "b":100,
+          "c":"5e2b97",
+          "d":"1a0026",
+          "l":"FFFFFF",
+          "m":"FFFFFF",
+          "p":"10",
+          "r":100,
+          "surl":0,
+          "fwtickm":1
+        }
+      }
     </script>
   </div>
 
+</div>
+
+<div class="descricao">
+  Todos os direitos reservados à Paramount Skydance
 </div>
 
 </body>
