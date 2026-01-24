@@ -41,11 +41,19 @@ body {
   border: none;
 }
 
+/* LOGO ABAIXO DO PLAYER */
+.logo-under {
+  display: block;
+  margin: 15px auto 6px;
+  width: 160px;
+}
+
 /* INFO */
 .info {
   max-width: 900px;
-  margin: 15px auto;
+  margin: 10px auto;
   padding: 0 15px;
+  text-align: center;
 }
 
 .info h1 {
@@ -55,11 +63,11 @@ body {
 
 .info p {
   margin-top: 6px;
-  font-size: 14px;
-  opacity: 0.85;
+  font-size: 18px;
+  opacity: 0.9;
 }
 
-/* BOTÃO FLUTUANTE */
+/* BOTÃO CHAT */
 .chat-btn {
   position: fixed;
   bottom: 20px;
@@ -78,7 +86,7 @@ body {
   background: #7d1fd1;
 }
 
-/* OVERLAY CHAT */
+/* CHAT FLUTUANTE */
 .chat-overlay {
   position: fixed;
   bottom: 80px;
@@ -115,12 +123,18 @@ body {
   </div>
 </div>
 
+<!-- LOGO (SEM BAIXAR) -->
+<img
+  src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/Nickelodeon_2023_logo_%28outline%29.svg/250px-Nickelodeon_2023_logo_%28outline%29.svg.png"
+  class="logo-under"
+  alt="Nickelodeon">
+
 <div class="info">
   <h1>NickWeb</h1>
   <p>Todos os direitos reservados à Paramount Skydance</p>
 </div>
 
-<!-- CHAT FLUTUANTE -->
+<!-- CHAT -->
 <div id="chat" class="chat-overlay">
   <iframe src="https://nick-web.chatango.com/"></iframe>
 </div>
@@ -130,9 +144,10 @@ body {
 <script>
 function toggleChat() {
   const chat = document.getElementById("chat");
-  chat.style.display = (chat.style.display === "none" || chat.style.display === "")
-    ? "block"
-    : "none";
+  chat.style.display =
+    (chat.style.display === "none" || chat.style.display === "")
+      ? "block"
+      : "none";
 }
 </script>
 
