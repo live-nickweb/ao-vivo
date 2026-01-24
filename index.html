@@ -2,34 +2,76 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<title>Nick Web</title>
+<title>NickWeb</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <style>
 body {
-  background:#000;
-  color:#fff;
-  text-align:center;
-  font-family:Arial;
+  margin: 0;
+  background: #000;
+  color: #fff;
+  font-family: Arial, sans-serif;
 }
-#player {
-  margin-top:20px;
+
+header {
+  background: #111;
+  padding: 10px;
+  text-align: center;
+  font-size: 22px;
+}
+
+.container {
+  display: flex;
+  height: calc(100vh - 50px);
+}
+
+.player {
+  flex: 3;
+}
+
+.chat {
+  flex: 1;
+  border-left: 2px solid #222;
+}
+
+/* Celular */
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+  }
+  .chat {
+    height: 300px;
+    border-left: none;
+    border-top: 2px solid #222;
+  }
 }
 </style>
 </head>
+
 <body>
 
-<h1>Nick Web</h1>
+<header>NickWeb</header>
 
-<div id="player"></div>
+<div class="container">
 
-<script src="https://player.twitch.tv/js/embed/v1.js"></script>
-<script>
-new Twitch.Player("player", {
-  channel: "Nick Web",
-  width: "90%",
-  height: 500,
-  parent: ["seunome.github.io"]
-});
-</script>
+  <!-- PLAYER -->
+  <iframe
+    class="player"
+    src="https://player.twitch.tv/?channel=nickelodeonbrasil309873&parent=live-nickweb.github.io"
+    allowfullscreen="true"
+    scrolling="no"
+    frameborder="0">
+  </iframe>
+
+  <!-- CHAT -->
+  <iframe
+    class="chat"
+    src="https://www.twitch.tv/embed/nickelodeonbrasil309873/chat?parent=live-nickweb.github.io"
+    frameborder="0"
+    scrolling="no">
+  </iframe>
+
+</div>
 
 </body>
 </html>
