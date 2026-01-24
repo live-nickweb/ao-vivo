@@ -15,17 +15,19 @@ body {
 
 /* TOPO */
 .topbar {
-  background: #0e0e0e;
+  background: #000;
   padding: 14px;
   font-size: 22px;
   font-weight: bold;
+  text-align: left;
+  border-bottom: 2px solid #fff; /* linha branca */
 }
 
 /* PLAYER */
 .player-wrapper {
   display: flex;
   justify-content: center;
-  margin-top: 10px;
+  margin: 15px 0;
 }
 
 .player {
@@ -41,10 +43,19 @@ body {
   border: none;
 }
 
-/* LOGO ABAIXO DO PLAYER */
+/* LINHA SEPARADORA */
+.divider {
+  width: 90%;
+  max-width: 900px;
+  height: 2px;
+  background: #fff;
+  margin: 15px auto;
+}
+
+/* LOGO */
 .logo-under {
   display: block;
-  margin: 15px auto 6px;
+  margin: 10px auto;
   width: 160px;
 }
 
@@ -56,15 +67,10 @@ body {
   text-align: center;
 }
 
-.info h1 {
-  margin: 0;
-  font-size: 26px;
-}
-
 .info p {
   margin-top: 6px;
   font-size: 18px;
-  opacity: 0.9;
+  opacity: 0.95;
 }
 
 /* BOTÃO CHAT */
@@ -94,7 +100,7 @@ body {
   width: 320px;
   height: 420px;
   background: #000;
-  border: 2px solid #6a0dad;
+  border: 2px solid #fff;
   border-radius: 10px;
   display: none;
   z-index: 1000;
@@ -111,8 +117,10 @@ body {
 
 <body>
 
+<!-- TOPO COM NOME -->
 <div class="topbar">NickWeb</div>
 
+<!-- PLAYER -->
 <div class="player-wrapper">
   <div class="player">
     <iframe
@@ -123,14 +131,18 @@ body {
   </div>
 </div>
 
-<!-- LOGO (SEM BAIXAR) -->
+<div class="divider"></div>
+
+<!-- LOGO -->
 <img
   src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/Nickelodeon_2023_logo_%28outline%29.svg/250px-Nickelodeon_2023_logo_%28outline%29.svg.png"
   class="logo-under"
   alt="Nickelodeon">
 
+<div class="divider"></div>
+
+<!-- TEXTO DE DIREITOS -->
 <div class="info">
-  <h1>NickWeb</h1>
   <p>Todos os direitos reservados à Paramount Skydance</p>
 </div>
 
