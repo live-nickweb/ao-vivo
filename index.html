@@ -5,7 +5,7 @@
 <title>NickWeb</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<!-- Fonte igual ao print -->
+<!-- Fonte -->
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
 <style>
@@ -51,11 +51,13 @@ body {
 
 .logo-circle img {
   width: 110px;
-  height: 110px;
+  height: auto;              /* NÃO ESTICA */
+  aspect-ratio: 1 / 1;       /* mantém proporção */
   border-radius: 50%;
   border: 3px solid #fff;
   padding: 10px;
   background: #000;
+  object-fit: contain;
 }
 
 /* CONTEÚDO */
@@ -72,7 +74,7 @@ body {
   margin: 18px 0 10px;
 }
 
-/* TEXTO NORMAL */
+/* TEXTO */
 .content p {
   font-size: 18px;
   line-height: 1.5;
@@ -118,7 +120,7 @@ body {
 <body>
 
 <!-- TOPO -->
-<div class="topbar">Nick Online</div>
+<div class="topbar">NickWeb</div>
 
 <!-- PLAYER -->
 <div class="player-wrapper">
@@ -133,36 +135,4 @@ body {
 
 <!-- LOGO -->
 <div class="logo-circle">
-  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/Nickelodeon_2023_logo_%28outline%29.svg/250px-Nickelodeon_2023_logo_%28outline%29.svg.png">
-</div>
-
-<!-- TEXTO -->
-<div class="content">
-  <h1>Nick Online</h1>
-
-  <p>
-    Todos os direitos reservados à Paramount Skydance
-  </p>
-
-  <p>
-    Nós somos a NickWeb, um revival da Nickelodeon Brasil, por enquanto transmitimos na Twitch
-  </p>
-</div>
-
-<!-- CHAT -->
-<div id="chat" class="chat-overlay">
-  <iframe src="https://nick-web.chatango.com/"></iframe>
-</div>
-
-<button class="chat-btn" onclick="toggleChat()">Chat</button>
-
-<script>
-function toggleChat() {
-  const chat = document.getElementById("chat");
-  chat.style.display =
-    chat.style.display === "block" ? "none" : "block";
-}
-</script>
-
-</body>
-</html>
+  <img src="https://upload.wikimedia.org/wi
