@@ -13,6 +13,7 @@ body {
   color: #fff;
 }
 
+/* TOPO */
 .topbar {
   background: #0e0e0e;
   padding: 14px;
@@ -20,6 +21,7 @@ body {
   font-weight: bold;
 }
 
+/* PLAYER */
 .player-wrapper {
   display: flex;
   justify-content: center;
@@ -39,6 +41,7 @@ body {
   border: none;
 }
 
+/* INFO */
 .info {
   max-width: 900px;
   margin: 15px auto;
@@ -56,30 +59,44 @@ body {
   opacity: 0.85;
 }
 
-/* BOTÃO CHAT */
+/* BOTÃO FLUTUANTE */
 .chat-btn {
-  display: block;
-  margin: 15px auto;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
   background: #6a0dad;
   color: #fff;
   border: none;
-  padding: 12px 20px;
+  padding: 14px 18px;
   font-size: 16px;
+  border-radius: 50px;
   cursor: pointer;
-  border-radius: 6px;
+  z-index: 1000;
 }
 
 .chat-btn:hover {
   background: #7d1fd1;
 }
 
-/* CHAT */
-.chat-box {
-  max-width: 900px;
-  margin: 0 auto 30px;
+/* OVERLAY CHAT */
+.chat-overlay {
+  position: fixed;
+  bottom: 80px;
+  right: 20px;
+  width: 320px;
   height: 420px;
-  padding: 0 15px;
-  display: none; /* COMEÇA FECHADO */
+  background: #000;
+  border: 2px solid #6a0dad;
+  border-radius: 10px;
+  display: none;
+  z-index: 1000;
+  overflow: hidden;
+}
+
+.chat-overlay iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
 }
 </style>
 </head>
@@ -103,44 +120,19 @@ body {
   <p>Todos os direitos reservados à Paramount Skydance</p>
 </div>
 
-<button class="chat-btn" onclick="toggleChat()">Abrir chat</button>
-
-<div id="chat" class="chat-box">
-  <script id="cid0020000430246339067"
-    data-cfasync="false"
-    async
-    src="//st.chatango.com/js/gz/emb.js"
-    style="width:100%;height:100%;">
-    {
-      "handle":"nick-web",
-      "arch":"js",
-      "styles":{
-        "b":100,
-        "c":"000000",
-        "d":"000000",
-        "l":"FFFFFF",
-        "m":"FFFFFF",
-        "p":"10",
-        "r":100,
-        "surl":0,
-        "fwtickm":1
-      }
-    }
-  </script>
+<!-- CHAT FLUTUANTE -->
+<div id="chat" class="chat-overlay">
+  <iframe src="https://nick-web.chatango.com/"></iframe>
 </div>
+
+<button class="chat-btn" onclick="toggleChat()">Chat</button>
 
 <script>
 function toggleChat() {
   const chat = document.getElementById("chat");
-  const btn = document.querySelector(".chat-btn");
-
-  if (chat.style.display === "none") {
-    chat.style.display = "block";
-    btn.textContent = "Fechar chat";
-  } else {
-    chat.style.display = "none";
-    btn.textContent = "Abrir chat";
-  }
+  chat.style.display = (chat.style.display === "none" || chat.style.display === "")
+    ? "block"
+    : "none";
 }
 </script>
 
