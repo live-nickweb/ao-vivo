@@ -6,7 +6,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-<link href="https://vjs.zencdn.net/8.10.0/video-js.css" rel="stylesheet" />
 
 <style>
 body {
@@ -39,49 +38,11 @@ body {
   box-shadow: 0 0 20px rgba(128,0,255,0.3);
 }
 
-.video-js {
-  width: 100% !important;
-  height: 100% !important;
-}
-
-/* PREVIEW */
-.preview {
-  position: absolute;
-  inset: 0;
-  background: url("https://i.ibb.co/FkymzfKd/Screenshot-20260420-130731-photoaidcom-blur.png") center/cover no-repeat;
-  z-index: 5;
-}
-
-.preview::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: rgba(0,0,0,0.35);
-}
-
-/* PLAY */
-.play-btn {
-  position: absolute;
-  inset: 0;
-  margin: auto;
-  width: 110px;
-  height: 110px;
-  border: none;
-  background: transparent;
-  cursor: pointer;
-  z-index: 10;
-}
-
-.play-btn img {
+/* VIDEO NATIVO */
+video {
   width: 100%;
   height: 100%;
-  object-fit: contain;
-  filter: drop-shadow(0 0 10px rgba(0,0,0,0.6));
-}
-
-.playing .preview,
-.playing .play-btn {
-  display: none;
+  background: black;
 }
 
 /* CONTADOR */
@@ -97,7 +58,7 @@ body {
   display: none;
   align-items: center;
   gap: 6px;
-  z-index: 20;
+  z-index: 10;
 }
 
 /* LOGO */
@@ -112,24 +73,46 @@ body {
   border-radius: 50%;
   border: 3px solid #fff;
   padding: 10px;
-  object-fit: contain;
 }
 
-/* CONTEÚDO */
+/* TEXTO */
 .content {
   max-width: 900px;
   margin: 0 auto;
   padding: 0 16px 40px;
 }
 
-/* LEGAL */
-.legal {
-  margin-top: 30px;
-  font-size: 12px;
+.content h1 {
+  font-size: 28px;
+  font-weight: 700;
+  margin: 18px 0 10px;
+}
+
+.content p {
+  font-size: 18px;
   line-height: 1.5;
-  opacity: 0.75;
-  border-top: 1px solid rgba(255,255,255,0.15);
-  padding-top: 16px;
+  margin: 0 0 22px;
+  opacity: 0.95;
+}
+
+/* 🔵 DIVISOR AZUL */
+.divider {
+  border: none;
+  height: 2px;
+  background: #3b82f6;
+  margin: 20px 0;
+}
+
+/* LEGAL TEXT */
+.legal-title {
+  font-weight: 700;
+  margin-top: 10px;
+}
+
+.legal {
+  font-size: 13px;
+  line-height: 1.6;
+  opacity: 0.85;
 }
 
 /* CHAT */
@@ -141,9 +124,9 @@ body {
   color: #fff;
   border: none;
   padding: 12px 18px;
+  font-size: 15px;
   border-radius: 50px;
   cursor: pointer;
-  font-size: 15px;
 }
 
 .chat-overlay {
@@ -172,15 +155,9 @@ body {
 <div class="topbar">Nickelodeon Web - AO VIVO!</div>
 
 <div class="player-wrapper">
-  <div class="player" id="player">
+  <div class="player">
 
-    <video id="video" class="video-js vjs-default-skin" playsinline></video>
-
-    <div class="preview"></div>
-
-    <button class="play-btn" id="playBtn">
-      <img src="https://icons.veryicon.com/png/o/internet--web/web-video-clip/play-332.png">
-    </button>
+    <video id="video" controls playsinline></video>
 
     <div class="viewers-overlay" id="viewersBox">
       👁 <span id="viewers">0</span>
@@ -194,34 +171,29 @@ body {
 </div>
 
 <div class="content">
+
   <h1>Nickelodeon Web</h1>
+
   <p>Todos os direitos reservados à Paramount Skydance</p>
   <p>Nós somos a Nickelodeon Web, um revival da Nickelodeon Brasil, assista seus desenhos favoritos aqui!</p>
 
+  <!-- 🔵 LINHA AZUL SEPARANDO -->
+  <hr class="divider">
+
+  <div class="legal-title">🇧🇷 Português</div>
   <div class="legal">
+    Este projeto é uma iniciativa independente de preservação e experimentação tecnológica, sem qualquer afiliação com Nickelodeon, Paramount ou quaisquer outros detentores de direitos. Todo o conteúdo exibido pertence aos seus respectivos titulares e é apresentado exclusivamente para fins de arquivamento, estudo técnico e preservação da identidade audiovisual.<br><br>
 
-    <strong>Aviso Legal e Política de Remoção / Legal Notice and Takedown Policy</strong>
+    Este projeto não possui fins lucrativos e tem caráter experimental, incluindo o desenvolvimento de tecnologias de playout automatizado. Incentivamos o apoio às versões oficiais e aos detentores de direitos.
+  </div>
 
-    <div style="margin-top:12px;"></div>
+  <hr class="divider">
 
-    <div>
-      <span style="color:#7db7ff; font-weight:700;">🇧🇷 Português</span><br><br>
+  <div class="legal-title">🇺🇸 English</div>
+  <div class="legal">
+    This project is an independent initiative focused on preservation and technological experimentation, with no affiliation with Nickelodeon, Paramount, or any other rights holders. All content displayed belongs to its respective owners and is presented solely for archival, technical study, and audiovisual identity preservation purposes.<br><br>
 
-      Este projeto é uma iniciativa independente de preservação e experimentação tecnológica, sem qualquer afiliação com Nickelodeon, Paramount ou quaisquer outros detentores de direitos. Todo o conteúdo exibido pertence aos seus respectivos titulares e é apresentado exclusivamente para fins de arquivamento, estudo técnico e preservação da identidade audiovisual.<br><br>
-
-      Este projeto não possui fins lucrativos e tem caráter experimental, incluindo o desenvolvimento de tecnologias de playout automatizado. Incentivamos o apoio às versões oficiais e aos detentores de direitos.
-    </div>
-
-    <hr style="border:0; border-top:2px solid #3b82f6; margin:16px 0;">
-
-    <div>
-      <span style="color:#7db7ff; font-weight:700;">🇺🇸 English</span><br><br>
-
-      This project is an independent initiative focused on preservation and technological experimentation, with no affiliation to Nickelodeon, Paramount, or any other rights holders. All content displayed belongs to its respective owners and is presented solely for archival, technical study, and audiovisual identity preservation purposes.<br><br>
-
-      This project is non-profit and experimental in nature, including the development of automated playout technologies. We encourage support for official releases and rights holders.
-    </div>
-
+    This project is non-profit and experimental in nature, including the development of automated playout technologies. We encourage support for official releases and rights holders.
   </div>
 
 </div>
@@ -232,7 +204,7 @@ body {
 
 <button class="chat-btn" onclick="toggleChat()">💬 Chat</button>
 
-<script src="https://vjs.zencdn.net/8.10.0/video.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
 
 <script>
 function toggleChat() {
@@ -240,44 +212,41 @@ function toggleChat() {
   chat.style.display = chat.style.display === "block" ? "none" : "block";
 }
 
-const player = videojs('video');
+const video = document.getElementById("video");
 
-player.src({
-  src: "https://vs20.live.opencaster.com/nickelodeonbrasil_68f1743d/index.m3u8",
-  type: "application/x-mpegURL"
-});
+const url = "https://vs20.live.opencaster.com/nickelodeonbrasil_68f1743d/index.m3u8";
 
-const playBtn = document.getElementById("playBtn");
-const playerDiv = document.getElementById("player");
+/* HLS.JS */
+if (Hls.isSupported()) {
+  const hls = new Hls({
+    enableWorker: true,
+    lowLatencyMode: true
+  });
 
-playBtn.onclick = () => {
-  player.play();
-  playerDiv.classList.add("playing");
-};
+  hls.loadSource(url);
+  hls.attachMedia(video);
+} else if (video.canPlayType("application/vnd.apple.mpegurl")) {
+  video.src = url;
+}
 
-player.on("play", () => {
-  playerDiv.classList.add("playing");
-});
+/* CONTADOR */
+let ultimo = 0;
 
-let ultimoValorValido = 0;
-
-function atualizarViewers() {
+function atualizar() {
   fetch("https://api.allorigins.win/raw?url=" +
     encodeURIComponent("https://vs20.live.opencaster.com/show_current.php?streamname=nickelodeonbrasil_68f1743d"))
-    .then(res => res.text())
-    .then(texto => {
+    .then(r => r.text())
+    .then(t => {
+      let m = t.match(/conexiones":(\d+)/);
+      if (m && m[1]) ultimo = parseInt(m[1]);
 
-      let match = texto.match(/conexiones":(\d+)/);
+      const box = document.getElementById("viewersBox");
 
-      if (match && match[1]) {
-        ultimoValorValido = parseInt(match[1]);
-      }
-
-      if (ultimoValorValido > 0) {
-        document.getElementById("viewersBox").style.display = "flex";
-        document.getElementById("viewers").innerText = ultimoValorValido;
+      if (ultimo > 0) {
+        box.style.display = "flex";
+        document.getElementById("viewers").innerText = ultimo;
       } else {
-        document.getElementById("viewersBox").style.display = "none";
+        box.style.display = "none";
       }
     })
     .catch(() => {
@@ -285,8 +254,8 @@ function atualizarViewers() {
     });
 }
 
-atualizarViewers();
-setInterval(atualizarViewers, 30000);
+atualizar();
+setInterval(atualizar, 30000);
 </script>
 
 </body>
