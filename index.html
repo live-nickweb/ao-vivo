@@ -45,6 +45,41 @@ video {
   background: black;
 }
 
+/* ▶️ OVERLAY PLAY (ADICIONADO) */
+.play-overlay {
+  position: absolute;
+  inset: 0;
+  background: url("https://i.imgur.com/8Km9tLL.jpg") center/cover no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 5;
+}
+
+.play-overlay::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.35);
+}
+
+.play-btn {
+  width: 120px;
+  height: 120px;
+  z-index: 6;
+  cursor: pointer;
+}
+
+.play-btn img {
+  width: 100%;
+  height: 100%;
+}
+
+/* esconder quando iniciar */
+.hidden {
+  display: none !important;
+}
+
 /* CONTADOR */
 .viewers-overlay {
   position: absolute;
@@ -73,6 +108,7 @@ video {
   border-radius: 50%;
   border: 3px solid #fff;
   padding: 10px;
+  object-fit: contain;
 }
 
 /* TEXTO */
@@ -95,26 +131,6 @@ video {
   opacity: 0.95;
 }
 
-/* 🔵 DIVISOR AZUL */
-.divider {
-  border: none;
-  height: 2px;
-  background: #3b82f6;
-  margin: 20px 0;
-}
-
-/* LEGAL TEXT */
-.legal-title {
-  font-weight: 700;
-  margin-top: 10px;
-}
-
-.legal {
-  font-size: 13px;
-  line-height: 1.6;
-  opacity: 0.85;
-}
-
 /* CHAT */
 .chat-btn {
   position: fixed;
@@ -124,9 +140,9 @@ video {
   color: #fff;
   border: none;
   padding: 12px 18px;
-  font-size: 15px;
   border-radius: 50px;
   cursor: pointer;
+  font-size: 15px;
 }
 
 .chat-overlay {
@@ -147,6 +163,24 @@ video {
   height: 100%;
   border: none;
 }
+
+/* divisor azul */
+.divider {
+  border: none;
+  height: 2px;
+  background: #3b82f6;
+  margin: 20px 0;
+}
+
+.legal-title {
+  font-weight: 700;
+}
+
+.legal {
+  font-size: 13px;
+  line-height: 1.6;
+  opacity: 0.85;
+}
 </style>
 </head>
 
@@ -158,6 +192,13 @@ video {
   <div class="player">
 
     <video id="video" controls playsinline></video>
+
+    <!-- ▶️ ADICIONADO SEM MEXER NO RESTO -->
+    <div class="play-overlay" id="playOverlay">
+      <div class="play-btn" id="playBtn">
+        <img src="https://icons.veryicon.com/png/o/internet--web/web-video-clip/play-332.png">
+      </div>
+    </div>
 
     <div class="viewers-overlay" id="viewersBox">
       👁 <span id="viewers">0</span>
@@ -177,7 +218,6 @@ video {
   <p>Todos os direitos reservados à Paramount Skydance</p>
   <p>Nós somos a Nickelodeon Web, um revival da Nickelodeon Brasil, assista seus desenhos favoritos aqui!</p>
 
-  <!-- 🔵 LINHA AZUL SEPARANDO -->
   <hr class="divider">
 
   <div class="legal-title">🇧🇷 Português</div>
@@ -213,10 +253,12 @@ function toggleChat() {
 }
 
 const video = document.getElementById("video");
+const overlay = document.getElementById("playOverlay");
+const playBtn = document.getElementById("playBtn");
 
 const url = "https://vs20.live.opencaster.com/nickelodeonbrasil_68f1743d/index.m3u8";
 
-/* HLS.JS */
+/* HLS */
 if (Hls.isSupported()) {
   const hls = new Hls({
     enableWorker: true,
@@ -225,9 +267,15 @@ if (Hls.isSupported()) {
 
   hls.loadSource(url);
   hls.attachMedia(video);
-} else if (video.canPlayType("application/vnd.apple.mpegurl")) {
+} else {
   video.src = url;
 }
+
+/* PLAY BUTTON */
+playBtn.onclick = () => {
+  video.play();
+  overlay.classList.add("hidden");
+};
 
 /* CONTADOR */
 let ultimo = 0;
