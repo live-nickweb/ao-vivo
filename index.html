@@ -53,7 +53,7 @@ video {
   padding: 6px 10px;
   border-radius: 20px;
   font-size: 14px;
-  display: flex;
+  display: none;
   align-items: center;
   gap: 6px;
 }
@@ -161,12 +161,12 @@ video {
   <div class="player">
     <video id="video" controls autoplay muted playsinline></video>
 
-    <!-- CONTADOR NO PLAYER -->
+    <!-- CONTADOR -->
     <div class="viewers-overlay">
       <svg viewBox="0 0 24 24">
         <path d="M12 5c-7 0-11 7-11 7s4 7 11 7 11-7 11-7-4-7-11-7zm0 12a5 5 0 1 1 0-10 5 5 0 0 1 0 10zm0-8a3 3 0 1 0 0 6 3 3 0 0 0 0-6z"/>
       </svg>
-      <span id="viewers">--</span>
+      <span id="viewers">0</span>
     </div>
 
   </div>
@@ -208,17 +208,30 @@ if (Hls.isSupported()) {
   video.src = videoSrc;
 }
 
-/* CONTADOR INTELIGENTE */
-let ultimoValorValido = "--";
+/* CONTADOR */
+let ultimoValorValido = 0;
 
 function atualizarViewers() {
   fetch("https://vs20.live.opencaster.com/show_current.php?streamname=nickelodeonbrasil_68f1743d")
-    .then(res => res.json())
-    .then(data => {
-      let atual = parseInt(data.conexiones);
+    .then(res => res.text())
+    .then(texto => {
 
-      if (!isNaN(atual) && atual > 0) {
-        ultimoValorValido = atual;
+      let match = texto.match(/conexiones["']?\s*[:=]\s*(\d+)/i);
+
+      if (match && match[1]) {
+        let valor = parseInt(match[1]);
+
+        if (!isNaN(valor)) {
+          ultimoValorValido = valor;
+        }
+      }
+
+      const overlay = document.querySelector(".viewers-overlay");
+
+      if (ultimoValorValido === 0) {
+        overlay.style.display = "none";
+      } else {
+        overlay.style.display = "flex";
       }
 
       document.getElementById("viewers").innerText = ultimoValorValido;
