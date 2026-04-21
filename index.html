@@ -42,6 +42,14 @@ video {
   background: #000;
 }
 
+/* 🔥 CONTADOR */
+.viewers {
+  text-align: center;
+  margin-top: 8px;
+  font-size: 15px;
+  opacity: 0.9;
+}
+
 .logo-circle {
   display: flex;
   justify-content: center;
@@ -141,6 +149,11 @@ video {
   </div>
 </div>
 
+<!-- 👀 CONTADOR AQUI -->
+<div class="viewers">
+  👀 <span id="viewers">Carregando...</span> assistindo
+</div>
+
 <div class="logo-circle">
   <img src="https://i.ibb.co/TxV7nwLw/20260420-172534.png">
 </div>
@@ -178,19 +191,32 @@ if (Hls.isSupported()) {
   video.src = videoSrc;
 }
 
+// 🔥 CONTADOR DE VIEWERS
+function atualizarViewers() {
+  fetch("https://vs20.live.opencaster.com/show_current.php?streamname=nickelodeonbrasil_68f1743d")
+    .then(res => res.json())
+    .then(data => {
+      document.getElementById("viewers").innerText = data.conexiones || 0;
+    })
+    .catch(() => {
+      document.getElementById("viewers").innerText = "0";
+    });
+}
+
+atualizarViewers();
+setInterval(atualizarViewers, 10000);
+
 // 🔥 AUTO SOM (melhor possível hoje)
 function tryUnmute() {
   video.muted = false;
 }
 
-// tenta depois de iniciar
 video.addEventListener('playing', () => {
   setTimeout(() => {
     video.muted = false;
   }, 500);
 });
 
-// qualquer interação ativa som
 document.addEventListener('click', tryUnmute);
 document.addEventListener('touchstart', tryUnmute);
 
