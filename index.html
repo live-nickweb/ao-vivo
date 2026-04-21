@@ -49,7 +49,6 @@ video {
   top: 10px;
   right: 10px;
   background: rgba(0,0,0,0.6);
-  backdrop-filter: blur(6px);
   padding: 6px 10px;
   border-radius: 20px;
   font-size: 14px;
@@ -156,12 +155,10 @@ video {
 
 <div class="topbar">Nickelodeon Web - AO VIVO!</div>
 
-<!-- PLAYER HLS -->
 <div class="player-wrapper">
   <div class="player">
     <video id="video" controls autoplay muted playsinline></video>
 
-    <!-- CONTADOR -->
     <div class="viewers-overlay">
       <svg viewBox="0 0 24 24">
         <path d="M12 5c-7 0-11 7-11 7s4 7 11 7 11-7 11-7-4-7-11-7zm0 12a5 5 0 1 1 0-10 5 5 0 0 1 0 10zm0-8a3 3 0 1 0 0 6 3 3 0 0 0 0-6z"/>
@@ -208,40 +205,43 @@ if (Hls.isSupported()) {
   video.src = videoSrc;
 }
 
-/* CONTADOR COM PROXY */
+/* CONTADOR (sem fetch) */
 let ultimoValorValido = 0;
 
 function atualizarViewers() {
-  fetch("https://api.allorigins.win/raw?url=" + encodeURIComponent("https://vs20.live.opencaster.com/show_current.php?streamname=nickelodeonbrasil_68f1743d"))
-    .then(res => res.text())
-    .then(texto => {
+  const script = document.createElement("script");
 
-      let match = texto.match(/conexiones":(\d+)/);
+  script.src = "https://vs20.live.opencaster.com/show_current.php?streamname=nickelodeonbrasil_68f1743d&rand=" + Math.random();
 
-      if (match && match[1]) {
-        let valor = parseInt(match[1]);
+  script.onload = function () {
+    const texto = script.innerHTML || "";
 
-        if (!isNaN(valor)) {
-          ultimoValorValido = valor;
-        }
+    const match = texto.match(/conexiones":(\d+)/);
+
+    if (match && match[1]) {
+      const valor = parseInt(match[1]);
+      if (!isNaN(valor)) {
+        ultimoValorValido = valor;
       }
+    }
 
-      const overlay = document.querySelector(".viewers-overlay");
+    const overlay = document.querySelector(".viewers-overlay");
 
-      if (ultimoValorValido === 0) {
-        overlay.style.display = "none";
-      } else {
-        overlay.style.display = "flex";
-      }
+    if (ultimoValorValido === 0) {
+      overlay.style.display = "none";
+    } else {
+      overlay.style.display = "flex";
+    }
 
-      document.getElementById("viewers").innerText = ultimoValorValido;
-    })
-    .catch(() => {
-      document.getElementById("viewers").innerText = ultimoValorValido;
-    });
+    document.getElementById("viewers").innerText = ultimoValorValido;
+
+    script.remove();
+  };
+
+  document.body.appendChild(script);
 }
 
-// carrega ao abrir
+// executa ao abrir
 atualizarViewers();
 
 // atualiza a cada 30s
@@ -260,7 +260,6 @@ video.addEventListener('playing', () => {
 
 document.addEventListener('click', tryUnmute);
 document.addEventListener('touchstart', tryUnmute);
-
 </script>
 
 </body>
