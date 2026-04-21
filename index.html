@@ -211,38 +211,49 @@ if (Hls.isSupported()) {
 /* CONTADOR */
 let ultimoValorValido = 0;
 
-function atualizarViewers() {
+function pegarViewers(callback) {
   fetch("https://vs20.live.opencaster.com/show_current.php?streamname=nickelodeonbrasil_68f1743d")
     .then(res => res.text())
     .then(texto => {
-
-      let match = texto.match(/conexiones["']?\s*[:=]\s*(\d+)/i);
+      let match = texto.match(/conexiones":(\d+)/);
 
       if (match && match[1]) {
         let valor = parseInt(match[1]);
-
         if (!isNaN(valor)) {
           ultimoValorValido = valor;
         }
       }
-
-      const overlay = document.querySelector(".viewers-overlay");
-
-      if (ultimoValorValido === 0) {
-        overlay.style.display = "none";
-      } else {
-        overlay.style.display = "flex";
-      }
-
-      document.getElementById("viewers").innerText = ultimoValorValido;
+      callback();
     })
-    .catch(() => {
-      document.getElementById("viewers").innerText = ultimoValorValido;
-    });
+    .catch(() => callback());
 }
 
-atualizarViewers();
-setInterval(atualizarViewers, 30000);
+function atualizarUI() {
+  const overlay = document.querySelector(".viewers-overlay");
+
+  if (ultimoValorValido === 0) {
+    overlay.style.display = "none";
+  } else {
+    overlay.style.display = "flex";
+  }
+
+  document.getElementById("viewers").innerText = ultimoValorValido;
+}
+
+// carregar rápido
+pegarViewers(atualizarUI);
+
+// fallback rápido
+setTimeout(() => {
+  if (ultimoValorValido === 0) {
+    pegarViewers(atualizarUI);
+  }
+}, 2000);
+
+// atualizar a cada 30s
+setInterval(() => {
+  pegarViewers(atualizarUI);
+}, 30000);
 
 // AUTO SOM
 function tryUnmute() {
