@@ -45,7 +45,7 @@ video {
   background: black;
 }
 
-/* ▶️ OVERLAY PLAY (ADICIONADO) */
+/* ▶️ OVERLAY PLAY */
 .play-overlay {
   position: absolute;
   inset: 0;
@@ -75,7 +75,6 @@ video {
   height: 100%;
 }
 
-/* esconder quando iniciar */
 .hidden {
   display: none !important;
 }
@@ -111,11 +110,11 @@ video {
   object-fit: contain;
 }
 
-/* TEXTO */
+/* TEXTO PRINCIPAL */
 .content {
   max-width: 900px;
   margin: 0 auto;
-  padding: 0 16px 40px;
+  padding: 0 25px 40px; /* Mais padding nas laterais */
 }
 
 .content h1 {
@@ -129,6 +128,41 @@ video {
   line-height: 1.5;
   margin: 0 0 22px;
   opacity: 0.95;
+}
+
+/* --- SEÇÃO LEGAL (AJUSTADA) --- */
+.legal-box {
+  max-width: 800px; /* Largura máxima confortável para leitura */
+  margin: 0 auto;   /* Centraliza o bloco na página */
+  padding: 0 30px 60px; /* Garante que o texto NUNCA encoste na borda */
+  text-align: left; /* Mantém o texto alinhado à esquerda como você queria */
+}
+
+.divider {
+  border: none;
+  height: 2px;
+  background: #3b82f6;
+  margin: 20px 0;
+}
+
+.legal-title {
+  font-weight: 700;
+  font-size: 16px;
+  margin-bottom: 15px;
+}
+
+.section-title {
+  font-weight: 700;
+  font-size: 18px;
+  margin: 25px 0 10px;
+  color: #3b82f6;
+}
+
+.legal {
+  font-size: 14px;
+  line-height: 1.6;
+  opacity: 0.85;
+  margin-bottom: 20px;
 }
 
 /* CHAT */
@@ -163,24 +197,6 @@ video {
   height: 100%;
   border: none;
 }
-
-/* divisor azul */
-.divider {
-  border: none;
-  height: 2px;
-  background: #3b82f6;
-  margin: 20px 0;
-}
-
-.legal-title {
-  font-weight: 700;
-}
-
-.legal {
-  font-size: 13px;
-  line-height: 1.6;
-  opacity: 0.85;
-}
 </style>
 </head>
 
@@ -190,20 +206,15 @@ video {
 
 <div class="player-wrapper">
   <div class="player">
-
     <video id="video" controls playsinline></video>
-
-    <!-- ▶️ ADICIONADO SEM MEXER NO RESTO -->
     <div class="play-overlay" id="playOverlay">
       <div class="play-btn" id="playBtn">
         <img src="https://icons.veryicon.com/png/o/internet--web/web-video-clip/play-332.png">
       </div>
     </div>
-
     <div class="viewers-overlay" id="viewersBox">
       👁 <span id="viewers">0</span>
     </div>
-
   </div>
 </div>
 
@@ -217,74 +228,53 @@ video {
   <p>Nós somos a Nickelodeon Web, um revival da Nickelodeon Brasil, assista seus desenhos favoritos aqui!</p>
 </div>
 
-<!-- 🔥 SÓ AQUI FOI ALTERADO (LEGAL SECTION) -->
 <div class="legal-box">
 
   <hr class="divider">
-
   <div class="legal-title">Aviso Legal e Política de Remoção / Legal Notice and Takedown Policy</div>
-
   <hr class="divider">
 
   <div class="section-title">🇧🇷 Português</div>
-
   <div class="legal">
     Este projeto é uma iniciativa independente de preservação e experimentação tecnológica, sem qualquer afiliação com Nickelodeon, Paramount ou quaisquer outros detentores de direitos. Todo o conteúdo exibido pertence aos seus respectivos titulares e é apresentado exclusivamente para fins de arquivamento, estudo técnico e preservação da identidade audiovisual.<br><br>
-
     Este projeto não possui fins lucrativos e tem caráter experimental, incluindo o desenvolvimento de tecnologias de playout automatizado. Incentivamos o apoio às versões oficiais e aos detentores de direitos.<br><br>
-
     Caso algum conteúdo seja considerado indevido, os titulares de direitos autorais ou seus representantes autorizados podem solicitar sua remoção por meio do e-mail:<br>
     <b>remove.nickweb@proton.me</b>
   </div>
 
   <div class="legal">
-    <br><b>Para que a solicitação seja válida e possa ser processada corretamente, ela deve incluir:</b><br><br>
-
+    <b>Para que a solicitação seja válida e possa ser processada corretamente, ela deve incluir:</b><br><br>
     • Identificação clara do conteúdo a ser removido (ex: nome do programa, trecho exibido, link, imagem ou qualquer outra evidência disponível).<br><br>
-
     • Nome completo do titular dos direitos ou de seu representante legal.<br><br>
-
     • Comprovação de titularidade ou autorização para agir em nome do titular.<br><br>
-
     • Declaração de boa-fé de que o uso do conteúdo não está autorizado pelo detentor dos direitos, seu agente ou pela lei.<br><br>
-
     • Informações de contato válidas (e-mail ou outro meio).<br><br>
-
     • Assinatura eletrônica do solicitante.<br><br>
-
     As solicitações serão analisadas e, quando válidas, atendidas no prazo máximo de 24 horas.
   </div>
 
   <hr class="divider">
 
   <div class="section-title">🇺🇸 English</div>
-
   <div class="legal">
     This project is an independent initiative focused on preservation and technological experimentation, with no affiliation with Nickelodeon, Paramount, or any other rights holders. All content displayed belongs to its respective owners and is presented solely for archival, technical study, and audiovisual identity preservation purposes.<br><br>
-
     This project is non-profit and experimental in nature, including the development of automated playout technologies. We encourage support for official releases and rights holders.<br><br>
-
     If any content is considered improper, copyright holders or their authorized representatives may request its removal via email:<br>
     <b>remove.nickweb@proton.me</b>
   </div>
 
   <div class="legal">
-    <br><b>To be considered valid and properly processed, a request must include:</b><br><br>
-
-    • Clear identification of the content to be removed (e.g. program name, excerpt, link, image, or any other available evidence).<br><br>
-
+    <b>To be considered valid and properly processed, a request must include:</b><br><br>
+    • Clear identification of the content to be removed.<br><br>
     • Full name of the copyright holder or their legal representative.<br><br>
-
-    • Proof of ownership or authorization to act on behalf of the rights holder.<br><br>
-
-    • A good-faith statement that the use of the content is not authorized by the copyright owner, its agent, or the law.<br><br>
-
-    • Valid contact information (email or other means).<br><br>
-
+    • Proof of ownership or authorization.<br><br>
+    • A good-faith statement.<br><br>
+    • Valid contact information.<br><br>
     • Electronic signature of the requester.<br><br>
-
     Requests will be reviewed and, when valid, processed within 24 hours.
   </div>
+
+</div>
 
 <div id="chat" class="chat-overlay">
   <iframe src="https://nick-web.chatango.com/"></iframe>
@@ -293,7 +283,6 @@ video {
 <button class="chat-btn" onclick="toggleChat()">💬 Chat</button>
 
 <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
-
 <script>
 function toggleChat() {
   const chat = document.getElementById("chat");
@@ -303,53 +292,37 @@ function toggleChat() {
 const video = document.getElementById("video");
 const overlay = document.getElementById("playOverlay");
 const playBtn = document.getElementById("playBtn");
-
 const url = "https://vs20.live.opencaster.com/nickelodeonbrasil_68f1743d/index.m3u8";
 
-/* HLS */
 if (Hls.isSupported()) {
-  const hls = new Hls({
-    enableWorker: true,
-    lowLatencyMode: true
-  });
-
+  const hls = new Hls({ enableWorker: true, lowLatencyMode: true });
   hls.loadSource(url);
   hls.attachMedia(video);
 } else {
   video.src = url;
 }
 
-/* PLAY BUTTON */
 playBtn.onclick = () => {
   video.play();
   overlay.classList.add("hidden");
 };
 
-/* CONTADOR */
 let ultimo = 0;
-
 function atualizar() {
-  fetch("https://api.allorigins.win/raw?url=" +
-    encodeURIComponent("https://vs20.live.opencaster.com/show_current.php?streamname=nickelodeonbrasil_68f1743d"))
+  fetch("https://api.allorigins.win/raw?url=" + encodeURIComponent("https://vs20.live.opencaster.com/show_current.php?streamname=nickelodeonbrasil_68f1743d"))
     .then(r => r.text())
     .then(t => {
       let m = t.match(/conexiones":(\d+)/);
       if (m && m[1]) ultimo = parseInt(m[1]);
-
       const box = document.getElementById("viewersBox");
-
       if (ultimo > 0) {
         box.style.display = "flex";
         document.getElementById("viewers").innerText = ultimo;
       } else {
         box.style.display = "none";
       }
-    })
-    .catch(() => {
-      document.getElementById("viewersBox").style.display = "none";
-    });
+    }).catch(() => { document.getElementById("viewersBox").style.display = "none"; });
 }
-
 atualizar();
 setInterval(atualizar, 30000);
 </script>
