@@ -34,6 +34,7 @@ body {
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 0 20px rgba(128,0,255,0.3);
+  position: relative;
 }
 
 video {
@@ -42,12 +43,25 @@ video {
   background: #000;
 }
 
-/* 🔥 CONTADOR */
-.viewers {
-  text-align: center;
-  margin-top: 8px;
-  font-size: 15px;
-  opacity: 0.9;
+/* CONTADOR */
+.viewers-overlay {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(0,0,0,0.6);
+  backdrop-filter: blur(6px);
+  padding: 6px 10px;
+  border-radius: 20px;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.viewers-overlay svg {
+  width: 16px;
+  height: 16px;
+  fill: white;
 }
 
 .logo-circle {
@@ -146,12 +160,16 @@ video {
 <div class="player-wrapper">
   <div class="player">
     <video id="video" controls autoplay muted playsinline></video>
-  </div>
-</div>
 
-<!-- 👀 CONTADOR AQUI -->
-<div class="viewers">
-  👀 <span id="viewers">Carregando...</span> assistindo
+    <!-- CONTADOR NO PLAYER -->
+    <div class="viewers-overlay">
+      <svg viewBox="0 0 24 24">
+        <path d="M12 5c-7 0-11 7-11 7s4 7 11 7 11-7 11-7-4-7-11-7zm0 12a5 5 0 1 1 0-10 5 5 0 0 1 0 10zm0-8a3 3 0 1 0 0 6 3 3 0 0 0 0-6z"/>
+      </svg>
+      <span id="viewers">--</span>
+    </div>
+
+  </div>
 </div>
 
 <div class="logo-circle">
@@ -170,7 +188,6 @@ video {
 
 <button class="chat-btn" onclick="toggleChat()">Chat</button>
 
-<!-- HLS.JS -->
 <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
 
 <script>
@@ -191,22 +208,30 @@ if (Hls.isSupported()) {
   video.src = videoSrc;
 }
 
-// 🔥 CONTADOR DE VIEWERS
+/* CONTADOR INTELIGENTE */
+let ultimoValorValido = "--";
+
 function atualizarViewers() {
   fetch("https://vs20.live.opencaster.com/show_current.php?streamname=nickelodeonbrasil_68f1743d")
     .then(res => res.json())
     .then(data => {
-      document.getElementById("viewers").innerText = data.conexiones || 0;
+      let atual = parseInt(data.conexiones);
+
+      if (!isNaN(atual) && atual > 0) {
+        ultimoValorValido = atual;
+      }
+
+      document.getElementById("viewers").innerText = ultimoValorValido;
     })
     .catch(() => {
-      document.getElementById("viewers").innerText = "0";
+      document.getElementById("viewers").innerText = ultimoValorValido;
     });
 }
 
 atualizarViewers();
-setInterval(atualizarViewers, 10000);
+setInterval(atualizarViewers, 30000);
 
-// 🔥 AUTO SOM (melhor possível hoje)
+// AUTO SOM
 function tryUnmute() {
   video.muted = false;
 }
