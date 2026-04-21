@@ -2,10 +2,9 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<title>NickWeb</title>
+<title>Nickelodeon Web - AO VIVO!</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<!-- Fonte -->
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
 <style>
@@ -16,14 +15,12 @@ body {
   font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
-/* TOPO */
 .topbar {
   padding: 14px 16px;
   font-size: 22px;
   font-weight: 600;
 }
 
-/* PLAYER */
 .player-wrapper {
   display: flex;
   justify-content: center;
@@ -34,15 +31,17 @@ body {
   width: 95%;
   max-width: 900px;
   aspect-ratio: 16 / 9;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 0 20px rgba(128,0,255,0.3);
 }
 
-.player iframe {
+video {
   width: 100%;
   height: 100%;
-  border: none;
+  background: #000;
 }
 
-/* LOGO */
 .logo-circle {
   display: flex;
   justify-content: center;
@@ -51,30 +50,25 @@ body {
 
 .logo-circle img {
   width: 110px;
-  height: auto;
   aspect-ratio: 1 / 1;
   border-radius: 50%;
   border: 3px solid #fff;
   padding: 10px;
-  background: transparent;
-  object-fit: contain; /* mantém proporção sem esticar */
+  object-fit: contain;
 }
 
-/* CONTEÚDO */
 .content {
   max-width: 900px;
   margin: 0 auto;
   padding: 0 16px 40px;
 }
 
-/* TÍTULO GRANDE */
 .content h1 {
   font-size: 28px;
   font-weight: 700;
   margin: 18px 0 10px;
 }
 
-/* TEXTO */
 .content p {
   font-size: 18px;
   line-height: 1.5;
@@ -82,36 +76,27 @@ body {
   opacity: 0.95;
 }
 
-/* BOTÃO CHAT */
 .chat-btn {
   position: fixed;
   right: 18px;
   bottom: 18px;
-  background: #8000ff; /* roxo */
+  background: #8000ff;
   color: #fff;
   border: none;
   padding: 12px 18px;
   font-size: 15px;
-  border-radius: 50px; /* estilo balão */
+  border-radius: 50px;
   cursor: pointer;
   display: flex;
   align-items: center;
-  gap: 6px; /* espaço entre ícone e texto */
+  gap: 6px;
   box-shadow: 0 4px 12px rgba(128,0,255,0.3);
-  transition: background 0.2s;
 }
 
-.chat-btn:hover {
-  background: #a64dff;
-}
-
-/* Ícone balão no botão */
 .chat-btn::before {
   content: "💬";
-  font-size: 18px;
 }
 
-/* CHAT */
 .chat-overlay {
   position: fixed;
   right: 18px;
@@ -130,7 +115,6 @@ body {
   border: none;
 }
 
-/* RESPONSIVO MOBILE */
 @media (max-width: 480px) {
   .chat-overlay {
     width: 90%;
@@ -148,45 +132,50 @@ body {
 
 <body>
 
-<!-- TOPO -->
-<div class="topbar">NickWeb</div>
+<div class="topbar">Nickelodeon kWeb</div>
 
-<!-- PLAYER -->
+<!-- PLAYER HLS -->
 <div class="player-wrapper">
   <div class="player">
-    <iframe
-      src="https://player.twitch.tv/?channel=nickelodeonbrasil309873&parent=live-nickweb.github.io&muted=false"
-      allowfullscreen
-      allow="autoplay; fullscreen">
-    </iframe>
+    <video id="video" controls autoplay muted playsinline></video>
   </div>
 </div>
 
-<!-- LOGO -->
 <div class="logo-circle">
-  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/Nickelodeon_2023_logo_%28outline%29.svg/250px-Nickelodeon_2023_logo_%28outline%29.svg.png" alt="NickWeb">
+  <img src="https://i.ibb.co/TxV7nwLw/20260420-172534.png">
 </div>
 
-<!-- TEXTO -->
 <div class="content">
-  <h1>NickWeb</h1>
+  <h1>Nickelodeon Web</h1>
   <p>Todos os direitos reservados à Paramount Skydance</p>
-  <p>Nós somos a NickWeb, um revival da Nickelodeon Brasil, por enquanto transmitimos na Twitch</p>
+  <p>Nós somos a Nickelodeon Web, um revival da Nickelodeon Brasil, assista seus desenhos favoritos aqui!</p>
 </div>
 
-<!-- CHAT -->
 <div id="chat" class="chat-overlay">
   <iframe src="https://nick-web.chatango.com/"></iframe>
 </div>
 
-<!-- BOTÃO CHAT -->
 <button class="chat-btn" onclick="toggleChat()">Chat</button>
+
+<!-- HLS.JS -->
+<script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
 
 <script>
 function toggleChat() {
   const chat = document.getElementById("chat");
   chat.style.display =
     chat.style.display === "block" ? "none" : "block";
+}
+
+const video = document.getElementById('video');
+const videoSrc = 'https://vs20.live.opencaster.com/nickelodeonbrasil_68f1743d/index.m3u8';
+
+if (Hls.isSupported()) {
+  const hls = new Hls();
+  hls.loadSource(videoSrc);
+  hls.attachMedia(video);
+} else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+  video.src = videoSrc;
 }
 </script>
 
