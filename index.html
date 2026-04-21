@@ -7,12 +7,15 @@
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
+<!-- Video.js CSS -->
+<link href="https://vjs.zencdn.net/8.10.0/video-js.css" rel="stylesheet" />
+
 <style>
 body {
   margin: 0;
   background: #000;
   color: #fff;
-  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: Inter, sans-serif;
 }
 
 .topbar {
@@ -24,111 +27,35 @@ body {
 .player-wrapper {
   display: flex;
   justify-content: center;
-  margin: 14px 0 6px;
+  margin: 14px 0;
 }
 
-/* ===== PLAYER NOVO (CUSTOM) ===== */
-.player {
+.video-js {
   width: 95%;
   max-width: 900px;
-  aspect-ratio: 16 / 9;
+  aspect-ratio: 16/9;
   border-radius: 14px;
   overflow: hidden;
-  position: relative;
-  background: #000;
   box-shadow: 0 0 40px rgba(128,0,255,0.4);
 }
 
-video {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  background: #000;
-}
-
-/* CONTADOR (IGUAL O TEU) */
-.viewers-overlay {
-  position: absolute;
-  top: 10px;
-  right: 10px;
+/* deixar mais bonito */
+.vjs-control-bar {
   background: rgba(0,0,0,0.6);
-  backdrop-filter: blur(6px);
-  padding: 6px 10px;
-  border-radius: 20px;
-  font-size: 14px;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  z-index: 5;
-}
-
-.viewers-overlay svg {
-  width: 16px;
-  height: 16px;
-  fill: white;
-}
-
-/* OVERLAY PLAY */
-.custom-overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to top, rgba(0,0,0,0.6), transparent);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: 0.3s;
-  z-index: 4;
-}
-
-#playBtn {
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  border: none;
-  background: rgba(0,0,0,0.6);
-  color: white;
-  font-size: 32px;
-  cursor: pointer;
   backdrop-filter: blur(10px);
-  transition: 0.3s;
 }
 
-#playBtn:hover {
-  transform: scale(1.15);
-  background: rgba(128,0,255,0.8);
-}
-
-/* CONTROLES */
-.controls {
-  position: absolute;
-  bottom: 10px;
-  left: 10px;
-  right: 10px;
-  display: flex;
-  justify-content: space-between;
-  z-index: 5;
-}
-
-.btn {
+.vjs-big-play-button {
+  border-radius: 50%;
   background: rgba(0,0,0,0.6);
   border: none;
-  color: white;
-  padding: 10px 14px;
-  border-radius: 10px;
-  cursor: pointer;
-  backdrop-filter: blur(8px);
+  font-size: 2em;
 }
 
-.btn:hover {
+.vjs-big-play-button:hover {
   background: rgba(128,0,255,0.8);
 }
 
-.player.playing .custom-overlay {
-  opacity: 0;
-  pointer-events: none;
-}
-
-/* resto do teu site intacto */
 .logo-circle {
   display: flex;
   justify-content: center;
@@ -137,78 +64,15 @@ video {
 
 .logo-circle img {
   width: 110px;
-  aspect-ratio: 1 / 1;
   border-radius: 50%;
   border: 3px solid #fff;
   padding: 10px;
-  object-fit: contain;
 }
 
 .content {
   max-width: 900px;
   margin: 0 auto;
   padding: 0 16px 40px;
-}
-
-.content h1 {
-  font-size: 28px;
-  font-weight: 700;
-  margin: 18px 0 10px;
-}
-
-.content p {
-  font-size: 18px;
-  line-height: 1.5;
-  margin: 0 0 22px;
-  opacity: 0.95;
-}
-
-.chat-btn {
-  position: fixed;
-  right: 18px;
-  bottom: 18px;
-  background: #5f98e3;
-  color: #fff;
-  border: none;
-  padding: 12px 18px;
-  font-size: 15px;
-  border-radius: 50px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  box-shadow: 0 4px 12px rgba(128,0,255,0.3);
-}
-
-.chat-overlay {
-  position: fixed;
-  right: 18px;
-  bottom: 70px;
-  width: 320px;
-  height: 420px;
-  background: #000;
-  border: 1px solid #333;
-  border-radius: 10px;
-  display: none;
-}
-
-.chat-overlay iframe {
-  width: 100%;
-  height: 100%;
-  border: none;
-}
-
-@media (max-width: 480px) {
-  .chat-overlay {
-    width: 90%;
-    height: 300px;
-    right: 5%;
-    bottom: 60px;
-  }
-
-  .player {
-    width: 100%;
-  }
 }
 </style>
 </head>
@@ -218,30 +82,14 @@ video {
 <div class="topbar">Nickelodeon Web - AO VIVO!</div>
 
 <div class="player-wrapper">
-  <div class="player">
-
-    <video id="video" autoplay muted playsinline></video>
-
-    <!-- CONTADOR (NÃO MEXIDO NA LÓGICA) -->
-    <div class="viewers-overlay">
-      <svg viewBox="0 0 24 24">
-        <path d="M12 5c-7 0-11 7-11 7s4 7 11 7 11-7 11-7-4-7-11-7zm0 12a5 5 0 1 1 0-10 5 5 0 0 1 0 10z"/>
-      </svg>
-      <span id="viewers">0</span>
-    </div>
-
-    <!-- OVERLAY -->
-    <div class="custom-overlay">
-      <button id="playBtn">▶</button>
-    </div>
-
-    <!-- CONTROLES -->
-    <div class="controls">
-      <button class="btn" id="muteBtn">🔊</button>
-      <button class="btn" id="fsBtn">⛶</button>
-    </div>
-
-  </div>
+  <video
+    id="my-video"
+    class="video-js vjs-default-skin"
+    controls
+    autoplay
+    muted
+    playsinline
+  ></video>
 </div>
 
 <div class="logo-circle">
@@ -250,91 +98,24 @@ video {
 
 <div class="content">
   <h1>Nickelodeon Web</h1>
-  <p>Todos os direitos reservados à Paramount Skydance</p>
-  <p>Nós somos a Nickelodeon Web, um revival da Nickelodeon Brasil, assista seus desenhos favoritos aqui!</p>
+  <p>Revival da Nickelodeon Brasil.</p>
 </div>
 
-<div id="chat" class="chat-overlay">
-  <iframe src="https://nick-web.chatango.com/"></iframe>
-</div>
-
-<button class="chat-btn" onclick="toggleChat()">Chat</button>
-
-<script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+<!-- Video.js -->
+<script src="https://vjs.zencdn.net/8.10.0/video.min.js"></script>
 
 <script>
-function toggleChat() {
-  const chat = document.getElementById("chat");
-  chat.style.display = chat.style.display === "block" ? "none" : "block";
-}
+const player = videojs('my-video', {
+  autoplay: true,
+  muted: true,
+  controls: true,
+  fluid: true
+});
 
-const video = document.getElementById('video');
-const videoSrc = 'https://vs20.live.opencaster.com/nickelodeonbrasil_68f1743d/index.m3u8';
-
-/* HLS */
-if (Hls.isSupported()) {
-  const hls = new Hls();
-  hls.loadSource(videoSrc);
-  hls.attachMedia(video);
-} else {
-  video.src = videoSrc;
-}
-
-/* PLAYER */
-const playBtn = document.getElementById("playBtn");
-const muteBtn = document.getElementById("muteBtn");
-const fsBtn = document.getElementById("fsBtn");
-const player = document.querySelector(".player");
-
-playBtn.onclick = () => {
-  video.play();
-  player.classList.add("playing");
-};
-
-video.onclick = () => {
-  if (video.paused) video.play();
-  else video.pause();
-  player.classList.add("playing");
-};
-
-muteBtn.onclick = () => {
-  video.muted = !video.muted;
-  muteBtn.innerText = video.muted ? "🔇" : "🔊";
-};
-
-fsBtn.onclick = () => {
-  if (!document.fullscreenElement) {
-    player.requestFullscreen();
-  } else {
-    document.exitFullscreen();
-  }
-};
-
-/* CONTADOR (CORRIGIDO - NÃO SOME MAIS) */
-let ultimoValorValido = 0;
-
-function atualizarViewers() {
-  fetch("https://api.allorigins.win/raw?url=" +
-    encodeURIComponent("https://vs20.live.opencaster.com/show_current.php?streamname=nickelodeonbrasil_68f1743d"))
-    .then(res => res.text())
-    .then(texto => {
-
-      let match = texto.match(/conexiones":(\d+)/);
-
-      if (match && match[1]) {
-        let valor = parseInt(match[1]);
-        if (!isNaN(valor)) ultimoValorValido = valor;
-      }
-
-      document.getElementById("viewers").innerText = ultimoValorValido;
-    })
-    .catch(() => {
-      document.getElementById("viewers").innerText = ultimoValorValido;
-    });
-}
-
-atualizarViewers();
-setInterval(atualizarViewers, 30000);
+player.src({
+  src: 'https://vs20.live.opencaster.com/nickelodeonbrasil_68f1743d/index.m3u8',
+  type: 'application/x-mpegURL'
+});
 </script>
 
 </body>
