@@ -7,7 +7,7 @@
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
-<!-- VIDEO.JS -->
+<!-- Video.js -->
 <link href="https://vjs.zencdn.net/8.10.0/video-js.css" rel="stylesheet" />
 
 <style>
@@ -24,21 +24,33 @@ body {
   font-weight: 600;
 }
 
-/* PLAYER WRAPPER */
 .player-wrapper {
   display: flex;
   justify-content: center;
   margin: 14px 0 6px;
 }
 
-/* VIDEO.JS PLAYER */
-.video-js {
+/* 🔥 FIX REAL: evita Video.js quebrar layout */
+.player {
   width: 95%;
   max-width: 900px;
   aspect-ratio: 16 / 9;
   border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 0 40px rgba(128,0,255,0.4);
+  position: relative;
+  background: #000;
+  box-shadow: 0 0 25px rgba(128,0,255,0.35);
+}
+
+/* Video.js responsivo correto */
+.video-js {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* força vídeo preencher sem distorcer */
+.vjs-tech {
+  object-fit: cover;
 }
 
 /* CONTADOR */
@@ -57,13 +69,7 @@ body {
   z-index: 10;
 }
 
-.viewers-overlay svg {
-  width: 16px;
-  height: 16px;
-  fill: white;
-}
-
-/* RESTO DO TEU LAYOUT */
+/* resto intacto */
 .logo-circle {
   display: flex;
   justify-content: center;
@@ -84,19 +90,6 @@ body {
   padding: 0 16px 40px;
 }
 
-.content h1 {
-  font-size: 28px;
-  font-weight: 700;
-  margin: 18px 0 10px;
-}
-
-.content p {
-  font-size: 18px;
-  line-height: 1.5;
-  margin: 0 0 22px;
-  opacity: 0.95;
-}
-
 .chat-btn {
   position: fixed;
   right: 18px;
@@ -105,9 +98,9 @@ body {
   color: #fff;
   border: none;
   padding: 12px 18px;
-  font-size: 15px;
   border-radius: 50px;
   cursor: pointer;
+  z-index: 999;
 }
 
 .chat-overlay {
@@ -120,12 +113,26 @@ body {
   border: 1px solid #333;
   border-radius: 10px;
   display: none;
+  z-index: 999;
 }
 
 .chat-overlay iframe {
   width: 100%;
   height: 100%;
   border: none;
+}
+
+/* MOBILE FIX */
+@media (max-width: 480px) {
+  .player {
+    width: 100%;
+    border-radius: 0;
+  }
+
+  .chat-overlay {
+    width: 90%;
+    right: 5%;
+  }
 }
 </style>
 </head>
@@ -135,25 +142,24 @@ body {
 <div class="topbar">Nickelodeon Web - AO VIVO!</div>
 
 <div class="player-wrapper">
+  <div class="player">
 
-  <!-- VIDEO.JS PLAYER -->
-  <video
-    id="my-video"
-    class="video-js vjs-default-skin"
-    controls
-    autoplay
-    muted
-    playsinline
-  ></video>
+    <!-- Video.js -->
+    <video
+      id="video"
+      class="video-js vjs-default-skin vjs-big-play-centered"
+      controls
+      autoplay
+      muted
+      playsinline
+    ></video>
 
-  <!-- CONTADOR -->
-  <div class="viewers-overlay">
-    <svg viewBox="0 0 24 24">
-      <path d="M12 5c-7 0-11 7-11 7s4 7 11 7 11-7 11-7-4-7-11-7z"/>
-    </svg>
-    <span id="viewers">0</span>
+    <!-- CONTADOR -->
+    <div class="viewers-overlay">
+      👁 <span id="viewers">0</span>
+    </div>
+
   </div>
-
 </div>
 
 <div class="logo-circle">
@@ -172,7 +178,7 @@ body {
 
 <button class="chat-btn" onclick="toggleChat()">Chat</button>
 
-<!-- VIDEO.JS -->
+<!-- Video.js -->
 <script src="https://vjs.zencdn.net/8.10.0/video.min.js"></script>
 
 <script>
@@ -181,8 +187,8 @@ function toggleChat() {
   chat.style.display = chat.style.display === "block" ? "none" : "block";
 }
 
-/* PLAYER VIDEO.JS */
-const player = videojs('my-video', {
+/* PLAYER VIDEO.JS FIXADO */
+const player = videojs('video', {
   autoplay: true,
   muted: true,
   controls: true,
@@ -195,7 +201,7 @@ player.src({
   type: "application/x-mpegURL"
 });
 
-/* CONTADOR FIXADO */
+/* CONTADOR ESTÁVEL */
 let ultimoValorValido = 0;
 
 function atualizarViewers() {
