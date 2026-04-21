@@ -208,52 +208,44 @@ if (Hls.isSupported()) {
   video.src = videoSrc;
 }
 
-/* CONTADOR */
+/* CONTADOR COM PROXY */
 let ultimoValorValido = 0;
 
-function pegarViewers(callback) {
-  fetch("https://vs20.live.opencaster.com/show_current.php?streamname=nickelodeonbrasil_68f1743d")
+function atualizarViewers() {
+  fetch("https://api.allorigins.win/raw?url=" + encodeURIComponent("https://vs20.live.opencaster.com/show_current.php?streamname=nickelodeonbrasil_68f1743d"))
     .then(res => res.text())
     .then(texto => {
+
       let match = texto.match(/conexiones":(\d+)/);
 
       if (match && match[1]) {
         let valor = parseInt(match[1]);
+
         if (!isNaN(valor)) {
           ultimoValorValido = valor;
         }
       }
-      callback();
+
+      const overlay = document.querySelector(".viewers-overlay");
+
+      if (ultimoValorValido === 0) {
+        overlay.style.display = "none";
+      } else {
+        overlay.style.display = "flex";
+      }
+
+      document.getElementById("viewers").innerText = ultimoValorValido;
     })
-    .catch(() => callback());
+    .catch(() => {
+      document.getElementById("viewers").innerText = ultimoValorValido;
+    });
 }
 
-function atualizarUI() {
-  const overlay = document.querySelector(".viewers-overlay");
+// carrega ao abrir
+atualizarViewers();
 
-  if (ultimoValorValido === 0) {
-    overlay.style.display = "none";
-  } else {
-    overlay.style.display = "flex";
-  }
-
-  document.getElementById("viewers").innerText = ultimoValorValido;
-}
-
-// carregar rápido
-pegarViewers(atualizarUI);
-
-// fallback rápido
-setTimeout(() => {
-  if (ultimoValorValido === 0) {
-    pegarViewers(atualizarUI);
-  }
-}, 2000);
-
-// atualizar a cada 30s
-setInterval(() => {
-  pegarViewers(atualizarUI);
-}, 30000);
+// atualiza a cada 30s
+setInterval(atualizarViewers, 30000);
 
 // AUTO SOM
 function tryUnmute() {
