@@ -6,6 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://vjs.zencdn.net/8.10.0/video-js.css" rel="stylesheet" />
 
 <style>
 body {
@@ -38,11 +39,16 @@ body {
   box-shadow: 0 0 20px rgba(128,0,255,0.3);
 }
 
-/* VIDEO NATIVO */
-video {
+/* VIDEO.JS AJUSTES */
+.video-js {
   width: 100%;
   height: 100%;
   background: black;
+}
+
+/* Oculta o botão padrão do video.js para usar o seu customizado */
+.vjs-big-play-button {
+  display: none !important;
 }
 
 /* ▶️ OVERLAY PLAY */
@@ -206,7 +212,10 @@ video {
 
 <div class="player-wrapper">
   <div class="player">
-    <video id="video" controls playsinline></video>
+    <video id="video" class="video-js" controls playsinline preload="auto">
+      <source src="https://vs20.live.opencaster.com/nickelodeonbrasil_68f1743d/index.m3u8" type="application/x-mpegURL">
+    </video>
+    
     <div class="play-overlay" id="playOverlay">
       <div class="play-btn" id="playBtn">
         <img src="https://icons.veryicon.com/png/o/internet--web/web-video-clip/play-332.png">
@@ -282,28 +291,21 @@ video {
 
 <button class="chat-btn" onclick="toggleChat()">💬 Chat</button>
 
-<script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+<script src="https://vjs.zencdn.net/8.10.0/video.min.js"></script>
 <script>
 function toggleChat() {
   const chat = document.getElementById("chat");
   chat.style.display = chat.style.display === "block" ? "none" : "block";
 }
 
-const video = document.getElementById("video");
 const overlay = document.getElementById("playOverlay");
 const playBtn = document.getElementById("playBtn");
-const url = "https://vs20.live.opencaster.com/nickelodeonbrasil_68f1743d/index.m3u8";
 
-if (Hls.isSupported()) {
-  const hls = new Hls({ enableWorker: true, lowLatencyMode: true });
-  hls.loadSource(url);
-  hls.attachMedia(video);
-} else {
-  video.src = url;
-}
+// Inicializando o Video.js
+const player = videojs('video');
 
 playBtn.onclick = () => {
-  video.play();
+  player.play();
   overlay.classList.add("hidden");
 };
 
